@@ -2,6 +2,7 @@
 
 #include <cmath>
 #include <iostream>
+#include "common.h"
 
 // ----------------------------------------------------------------------------: class
 class vec3 {
@@ -43,6 +44,14 @@ public:
   double length() const { return std::sqrt(length_squared()); }
 
   double length_squared() const { return e[0] * e[0] + e[1] * e[1] + e[2] * e[2]; }
+
+  static vec3 random() {
+    return vec3(RandomDouble(), RandomDouble(),RandomDouble());
+  }
+
+  static vec3 random(double min, double max) {
+    return vec3(RandomDouble(min, max), RandomDouble(min, max),RandomDouble(min, max));
+  }
 };
 
 // ----------------------------------------------------------------------------: alias
