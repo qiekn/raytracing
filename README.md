@@ -49,3 +49,7 @@ We got this blue-to-white gradient depending on ray Y coordinate.
 ## A simiple red sphere
 
 ![red-sphere](./imgs/20251230-3.jpg)
+
+## A sphere colored according to its normal vectors
+
+![colored-sphere-with-normal-vector](./imgs/20251230-4.jpg)
