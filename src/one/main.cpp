@@ -6,9 +6,9 @@
 #include "sphere.h"
 #include "vec3.h"
 
-color RayColor(const Ray& r, const HittableList& world) {
+color RayColor(const Ray& r, const Hittable& world) {
   HitRecord rec;
-  if (world.Hit(r, 0, kInfinity, rec)) {
+  if (world.Hit(r, Interval(0, kInfinity), rec)) {
     return 0.5 * (rec.normal + color(1, 1, 1));
   }
 

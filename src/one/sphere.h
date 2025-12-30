@@ -2,6 +2,7 @@
 
 #include <cmath>
 #include "hittable.h"
+#include "interval.h"
 #include "ray.h"
 #include "vec3.h"
 
@@ -10,7 +11,7 @@ public:
   Sphere(const point3& center, double radius)
       : center_(center), radius_(std::fmax(0, radius)) {}
 
-  bool Hit(const Ray& r, double ray_tmin, double ray_tmax, HitRecord& rec) const override {
+  bool Hit(const Ray& r, Interval ray_t, HitRecord& rec) const override {
     https://tinyurl.com/5eynscbx
     vec3 oc = center_ - r.origin();
     double a = r.direction().length_squared();
@@ -25,9 +26,9 @@ public:
 
     // Find the nearest root that lies in the acceptable range.
     double t = (h - sqrtd) / a;
-    if (t <= ray_tmin || t >= ray_tmax) {
+    if (!ray_t.Surrounds(t)) {
       t = (h + sqrtd) / a;
-      if (t <= ray_tmin || t >= ray_tmax)
+      if (!ray_t.Surrounds(t))
         return false;
     }
 

@@ -1,12 +1,13 @@
 #pragma once
 
+#include "interval.h"
 #include "ray.h"
 #include "vec3.h"
 
 class HitRecord {
 public:
-  point3 p; // hit point
-  double t; // ray parameter
+  point3 p;  // hit point
+  double t;  // ray parameter
   vec3 normal;
   bool front_face;
 
@@ -22,5 +23,5 @@ class Hittable {
 public:
   virtual ~Hittable() = default;
 
-  virtual bool Hit(const Ray& r, double ray_tmin, double ray_tmax, HitRecord& rec) const = 0;
+  virtual bool Hit(const Ray& r, Interval ray_t, HitRecord& rec) const = 0;
 };
