@@ -45,3 +45,7 @@ P3
 We got this blue-to-white gradient depending on ray Y coordinate.
 
 ![blue-to-white gradient](./imgs/20251230-2.jpg)
+
+## A simiple red sphere
+
+![red-sphere](./imgs/20251230-3.jpg)
