@@ -18,7 +18,7 @@ cmake --build build -j${nproc}
 ./build/main > image.ppm
 ```
 
-![image.ppm](image.jpg)
+![image.ppm](imgs/20251230-1.jpg)
 
 ```txt
 P3
@@ -39,3 +39,9 @@ P3
 12 0 0
 ...
 ```
+
+## Sending rays to the scene
+
+We got this blue-to-white gradient depending on ray Y coordinate.
+
+![blue-to-white gradient](./imgs/20251230-2.jpg)
