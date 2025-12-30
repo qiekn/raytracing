@@ -16,4 +16,5 @@ add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 
 target_include_directories(${PROJECT_NAME} PRIVATE
   include
+  deps/header-only
 )
