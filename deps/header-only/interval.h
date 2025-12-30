@@ -14,6 +14,12 @@ public:
 
   bool Surrounds(double x) const { return x > min && x < max; }
 
+  double Clamp(double x) const {
+    if (x < min) return min;
+    if (x > max) return max;
+    return x;
+  }
+
   static const Interval empty, universe;
 
 public:
