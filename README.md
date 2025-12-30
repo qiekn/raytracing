@@ -57,3 +57,7 @@ We got this blue-to-white gradient depending on ray Y coordinate.
 ## Normals-colored sphere with ground
 
 ![normal-colored](./imgs/20251230-5.jpg)
+
+## Antialiasing
+
+![after](./imgs/20251230-6.png)

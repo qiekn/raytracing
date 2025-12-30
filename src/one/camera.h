@@ -1,6 +1,8 @@
 #pragma once
 
+#include <iostream>
 #include "color.h"
+#include "common.h"
 #include "hittable.h"
 #include "ray.h"
 #include "vec3.h"
@@ -16,12 +18,12 @@ public:
     for (int j = 0; j < image_height_; j++) {
       std::clog << "\rScanline remaining: " << (image_height_ - j) << ' ' << std::flush;
       for (int i = 0; i < image_width; i++) {
-        vec3 pixel_center = pixel00_loc_ + (i * pixel_delta_u_) + (j * pixel_delta_v_);
-        vec3 ray_direction = pixel_center - camera_center_;
-        Ray ray(camera_center_, ray_direction);
-
-        color pixel_color = RayColor(ray, world);
-        write_color(std::cout, pixel_color);
+        color pixel_color(0,0,0);
+        for (int sample = 0; sample < samples_per_pixel; sample++) {
+          Ray r = GetRay(i, j);
+          pixel_color += RayColor(r, world);
+        }
+        write_color(std::cout, pixel_samples_scale_ * pixel_color);
       }
     }
     std::clog << "\rDone.                 \n";
@@ -31,6 +33,8 @@ private:
   void Initialize() {
     image_height_ = int(image_width / aspect_ratio);
     image_height_ = (image_height_ < 1) ? 1 : image_height_;
+
+    pixel_samples_scale_ = 1.0 / samples_per_pixel;
 
     camera_center_ = point3(0, 0, 0);
 
@@ -53,6 +57,20 @@ private:
     pixel00_loc_ = viewport_upper_left + 0.5 * (pixel_delta_u_ + pixel_delta_v_);
   }
 
+  Ray GetRay(int i, int j) const {
+    // Construct a camera ray originating from the origin and directed 
+    // at randomly sampled point around the pixel location i, j
+
+    vec3 offset = SampleSquare();
+    vec3 pixel_sample = pixel00_loc_ + 
+                      ((i + offset.x()) * pixel_delta_u_) +
+                      ((j + offset.y()) * pixel_delta_v_);
+    point3 ray_origin = camera_center_;
+    vec3 ray_direction = pixel_sample - ray_origin;
+
+    return Ray(ray_origin, ray_direction);
+  }
+
   color RayColor(const Ray& r, const Hittable& world) const {
     HitRecord rec;
     if (world.Hit(r, Interval(0, kInfinity), rec)) {
@@ -69,16 +87,23 @@ private:
     return (1.0 - a) * color(1.0, 1.0, 1.0) + a * color(0.5, 0.7, 1.0);
   }
 
+  // Returns the vector to a ramdom point in the [-0.5, -0.5]~[0.5, 0.5] unit squre.
+  vec3 SampleSquare() const  {
+    return vec3(RandomDouble() - 0.5, RandomDouble() - 0.5, 0);
+  }
+
 // ----------------------------------------------------------------------------: data
 public:
-  double aspect_ratio = 16.0 / 9.0;
-  int    image_width  = 400;
+  double aspect_ratio = 1.0;   // Ratio of image width over height
+  int image_width = 100;       // Rendered image width in pexel count
+  int samples_per_pixel = 10;  // Count of random samples for each pixel
 
 private:
   // Calculate the image height, and ensure that it's at least 1.
-  int    image_height_;   // Rendered iamge height
-  point3 camera_center_;         // Camera center
-  point3 pixel00_loc_;    // Location of pixel 0, 0 (upper left)
-  vec3   pixel_delta_u_;  // Offset to pixel to the right
-  vec3   pixel_delta_v_;  // Offset to pixel below
+  int image_height_;            // Rendered iamge height
+  double pixel_samples_scale_;  // Color scale factor for a sum of pixel samples
+  point3 camera_center_;        // Camera center
+  point3 pixel00_loc_;          // Location of pixel 0, 0 (upper left)
+  vec3 pixel_delta_u_;          // Offset to pixel to the right
+  vec3 pixel_delta_v_;          // Offset to pixel below
 };

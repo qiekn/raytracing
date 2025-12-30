@@ -23,7 +23,7 @@ inline double RandomDouble() {
   // This is the old wary
   // return std::rand() / (RAND_MAX + 1.0);
 
-  // Now we can
+  // Now we can...
   static std::uniform_real_distribution<double> distribution(0.0, 1.0);
   static std::mt19937 generator;
   return distribution(generator);
