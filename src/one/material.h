@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cmath>
 #include "color.h"
 #include "hittable.h"
 #include "ray.h"
@@ -66,9 +67,18 @@ public:
     double ri = rec.front_face ? (1.0 / refraction_index_) : refraction_index_;
 
     vec3 unit_direction = unit_vector(r_in.direction());
-    vec3 refracted = refract(unit_direction, rec.normal, ri);
+    double cos_theta = std::fmin(dot(-unit_direction, rec.normal), 1.0);
+    double sin_theta = std::sqrt(1.0 - cos_theta * cos_theta);
 
-    scattered = Ray(rec.p, refracted);
+    bool cannot_refract = ri * sin_theta > 1.0;
+    vec3 direction;
+
+    if (cannot_refract)
+      direction = reflect(unit_direction, rec.normal);
+    else
+      direction = refract(unit_direction, rec.normal, ri);
+
+    scattered = Ray(rec.p, direction);
     return true;
   }
 
