@@ -109,6 +109,15 @@ inline vec3 unit_vector(const vec3& v) {
   return v / v.length();
 }
 
+// Generate random point inside unit disk
+inline vec3 random_in_unit_disk() {
+  while (true) {
+    auto p = vec3(RandomDouble(-1, 1), RandomDouble(-1, 1), 0);
+    if (p.length_squared() < 1)
+      return p;
+  }
+}
+
 // A rejection method to generate the random vector inside the unit sphere
 inline vec3 random_unit_vector() {
   while (true) {

@@ -101,3 +101,7 @@ A distant view
 Zooming in
 
 ![zooming in](./imgs/20260101-10.jpg)
+
+## Defocus blur
+
+![defocus blur](./imgs/20260101-11.jpg)
