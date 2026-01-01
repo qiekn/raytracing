@@ -74,7 +74,8 @@ private:
   color RayColor(const Ray& r, const Hittable& world) const {
     HitRecord rec;
     if (world.Hit(r, Interval(0, kInfinity), rec)) {
-      return 0.5 * (rec.normal + color(1, 1, 1));
+      vec3 direction = random_on_hemispshere(rec.normal);
+      return 0.5 * RayColor(Ray(rec.p, direction), world);
     }
 
     vec3 unit_direction = unit_vector(r.direction());

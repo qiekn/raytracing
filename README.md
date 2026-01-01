@@ -61,3 +61,7 @@ We got this blue-to-white gradient depending on ray Y coordinate.
 ## Antialiasing
 
 ![after](./imgs/20251230-6.png)
+
+## A diffuse sphere
+
+![duffuse sphere](./imgs/20260101-1.jpg)
