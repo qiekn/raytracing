@@ -108,4 +108,10 @@ Zooming in
 
 ## Final Render
 
-![final render](../imgs/one/a-final-render_low-quality.jpg)
+Low quality
+
+![final render low](../imgs/one/a-final-render_low-quality.jpg)
+
+High quality
+
+![final render high](../imgs/one/a-final-render_high-quality.jpg)
