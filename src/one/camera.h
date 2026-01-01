@@ -77,7 +77,7 @@ private:
       return color(0, 0, 0);
 
     HitRecord rec;
-    if (world.Hit(r, Interval(0, kInfinity), rec)) {
+    if (world.Hit(r, Interval(0.001, kInfinity), rec)) {
       vec3 direction = random_on_hemispshere(rec.normal);
       return 0.5 * RayColor(Ray(rec.p, direction), depth - 1, world);
     }
