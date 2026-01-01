@@ -69,3 +69,7 @@ We got this blue-to-white gradient depending on ray Y coordinate.
 ## Gamma correction
 
 ![gamma fix](./imgs/20260101-2.jpg)
+
+## Metal
+
+![metal](./imgs/20260101-3.jpg)

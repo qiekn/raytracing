@@ -1,8 +1,11 @@
 #pragma once
 
+#include "common.h"
 #include "interval.h"
 #include "ray.h"
 #include "vec3.h"
+
+class Material;
 
 class HitRecord {
 public:
@@ -10,6 +13,7 @@ public:
   double t;  // ray parameter
   vec3 normal;
   bool front_face;
+  shared_ptr<Material> mat;
 
   void SetFaceNormal(const Ray& r, const vec3& outward_normal) {
     // Sets the hit record normal vector.

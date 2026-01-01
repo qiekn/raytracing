@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cmath>
+#include "common.h"
 #include "hittable.h"
 #include "interval.h"
 #include "ray.h"
@@ -8,8 +9,8 @@
 
 class Sphere : public Hittable {
 public:
-  Sphere(const point3& center, double radius)
-      : center_(center), radius_(std::fmax(0, radius)) {}
+  Sphere(const point3& center, double radius, shared_ptr<Material> mat)
+      : center_(center), radius_(std::fmax(0, radius)), mat_(mat) {}
 
   bool Hit(const Ray& r, Interval ray_t, HitRecord& rec) const override {
     https://tinyurl.com/5eynscbx
@@ -36,6 +37,7 @@ public:
     rec.p = r.at(rec.t);
     vec3 outward_normal = (rec.p - center_) / radius_;
     rec.SetFaceNormal(r, outward_normal);
+    rec.mat = mat_;
 
     return true;
   }
@@ -43,4 +45,5 @@ public:
 private:
   point3 center_;
   double radius_;
+  shared_ptr<Material> mat_;
 };

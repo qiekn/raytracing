@@ -6,6 +6,7 @@
 #include "hittable.h"
 #include "ray.h"
 #include "vec3.h"
+#include "material.h" // IWYU pragma: keep
 
 class Camera {
 // ----------------------------------------------------------------------------: methods
@@ -78,8 +79,11 @@ private:
 
     HitRecord rec;
     if (world.Hit(r, Interval(0.001, kInfinity), rec)) {
-      vec3 direction = rec.normal + random_unit_vector();
-      return 0.5 * RayColor(Ray(rec.p, direction), depth - 1, world);
+      Ray scattered;
+      color attenuation;
+      if (rec.mat->Scatter(r, rec, attenuation, scattered))
+        return attenuation * RayColor(scattered, depth - 1, world);
+      return color(0, 0, 0);
     }
 
     vec3 unit_direction = unit_vector(r.direction());
