@@ -2,6 +2,7 @@
 
 #include <cmath>
 #include "color.h"
+#include "common.h"
 #include "hittable.h"
 #include "ray.h"
 #include "vec3.h"
@@ -73,13 +74,21 @@ public:
     bool cannot_refract = ri * sin_theta > 1.0;
     vec3 direction;
 
-    if (cannot_refract)
+    if (cannot_refract || Reflectance(cos_theta, ri) > RandomDouble())
       direction = reflect(unit_direction, rec.normal);
     else
       direction = refract(unit_direction, rec.normal, ri);
 
     scattered = Ray(rec.p, direction);
     return true;
+  }
+
+private:
+  static double Reflectance(double cosine, double refraction_index) {
+    // Use Schlick's approximation forreflectance.
+    double r0 = (1 - refraction_index) / (1 + refraction_index);
+    r0 = r0 * r0;
+    return r0 + (1 - r0) * std::pow((1 - cosine), 5);
   }
 
 private:
