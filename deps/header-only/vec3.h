@@ -101,3 +101,13 @@ inline vec3 cross(const vec3& u, const vec3& v) {
 inline vec3 unit_vector(const vec3& v) {
   return v / v.length();
 }
+
+// A rejection method to generate the random vector inside the unit sphere
+inline vec3 random_unit_vector() {
+  while (true) {
+    auto p = vec3::random(-1, 1);
+    auto lensq = p.length_squared();
+    if (lensq >= 1e-160 && lensq <= 1)
+      return p / sqrt(lensq);
+  }
+}
