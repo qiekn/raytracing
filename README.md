@@ -72,4 +72,7 @@ We got this blue-to-white gradient depending on ray Y coordinate.
 
 ## Metal
 
-![metal](./imgs/20260101-3.jpg)
+![shiny metal](./imgs/20260101-3.jpg)
+
+![fuzz metal](./imgs/20260101-4.jpg)
+
