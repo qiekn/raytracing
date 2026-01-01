@@ -21,7 +21,7 @@ public:
         color pixel_color(0,0,0);
         for (int sample = 0; sample < samples_per_pixel; sample++) {
           Ray r = GetRay(i, j);
-          pixel_color += RayColor(r, world);
+          pixel_color += RayColor(r, max_depth, world);
         }
         write_color(std::cout, pixel_samples_scale_ * pixel_color);
       }
@@ -71,11 +71,15 @@ private:
     return Ray(ray_origin, ray_direction);
   }
 
-  color RayColor(const Ray& r, const Hittable& world) const {
+  color RayColor(const Ray& r, int depth, const Hittable& world) const {
+    // If we've exceeded the ray bounce limit, no more light is gathered
+    if (depth <= 0)
+      return color(0, 0, 0);
+
     HitRecord rec;
     if (world.Hit(r, Interval(0, kInfinity), rec)) {
       vec3 direction = random_on_hemispshere(rec.normal);
-      return 0.5 * RayColor(Ray(rec.p, direction), world);
+      return 0.5 * RayColor(Ray(rec.p, direction), depth - 1, world);
     }
 
     vec3 unit_direction = unit_vector(r.direction());
@@ -98,6 +102,7 @@ public:
   double aspect_ratio = 1.0;   // Ratio of image width over height
   int image_width = 100;       // Rendered image width in pexel count
   int samples_per_pixel = 10;  // Count of random samples for each pixel
+  int max_depth = 10;          // Maximum number of ray bounces into scene
 
 private:
   // Calculate the image height, and ensure that it's at least 1.
