@@ -80,8 +80,9 @@ private:
                       ((j + offset.y()) * pixel_delta_v_);
     point3 ray_origin = (defocus_angle <= 0) ? camera_center_ : DefocusDiskSample();
     vec3 ray_direction = pixel_sample - ray_origin;
+    double ray_time = RandomDouble();
 
-    return Ray(ray_origin, ray_direction);
+    return Ray(ray_origin, ray_direction, ray_time);
   }
 
   // Retrun a random point int he camera defocus disk.

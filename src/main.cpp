@@ -22,7 +22,8 @@ int main() {
           // diffuse
           auto albedo = color::random() * color::random();
           Sphere_material = make_shared<Lambertian>(albedo);
-          world.Add(make_shared<Sphere>(center, 0.2, Sphere_material));
+          auto center2 = center + vec3(0, RandomDouble(0, 0.5), 0);
+          world.Add(make_shared<Sphere>(center, center2, 0.2, Sphere_material));
         } else if (choose_mat < 0.95) {
           // metal
           auto albedo = color::random(0.5, 1);
@@ -50,8 +51,8 @@ int main() {
   Camera cam;
 
   cam.aspect_ratio = 16.0 / 9.0;
-  cam.image_width = 1200;
-  cam.samples_per_pixel = 10;
+  cam.image_width = 400;
+  cam.samples_per_pixel = 100;
   cam.max_depth = 50;
 
   cam.vfov = 20;
