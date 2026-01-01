@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cmath>
 #include <iostream>
 #include "color.h"
 #include "common.h"
@@ -39,9 +40,11 @@ private:
 
     camera_center_ = point3(0, 0, 0);
 
-    // Determin viewport dimensions.
+    // Determine viewport dimensions.
     double focal_length = 1.0;
-    double viewport_height = 2.0;
+    double theta = Deg2Rad(vfov);
+    double h = std::tan(theta / 2);
+    double viewport_height = 2 * h * focal_length;
     double viewport_width = viewport_height * (double(image_width) / image_height_);
 
     // Calculate the vectors across the horiziontal and down the vertical viewport edges.
@@ -107,6 +110,7 @@ public:
   int image_width = 100;       // Rendered image width in pexel count
   int samples_per_pixel = 10;  // Count of random samples for each pixel
   int max_depth = 10;          // Maximum number of ray bounces into scene
+  double vfov = 90;            // Vertical view angle (field of view)
 
 private:
   // Calculate the image height, and ensure that it's at least 1.
