@@ -7,3 +7,5 @@
 ## Texture
 
 ![checkerd ground](../imgs/next/sphere-on-checkered-ground.jpg)
+
+![checkered spheres](../imgs/next/checkered-spheres.jpg)
