@@ -65,3 +65,7 @@ We got this blue-to-white gradient depending on ray Y coordinate.
 ## A diffuse sphere
 
 ![duffuse sphere](./imgs/20260101-1.jpg)
+
+## Gamma correction
+
+![gamma fix](./imgs/20260101-2.jpg)
