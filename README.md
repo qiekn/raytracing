@@ -76,3 +76,6 @@ We got this blue-to-white gradient depending on ray Y coordinate.
 
 ![fuzz metal](./imgs/20260101-4.jpg)
 
+## Glass
+
+![always refracts](./imgs/20260101-5.jpg)
