@@ -85,3 +85,7 @@ Total internal reflection: Air bubble sometimes refracts, someties reflects
 
 Hollow glass sphere
 ![hollow glass sphere](./imgs/20260101-7.jpg)
+
+## Camera fov
+
+![](./imgs/20260101-8.jpg)
