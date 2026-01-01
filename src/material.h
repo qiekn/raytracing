@@ -5,6 +5,7 @@
 #include "common.h"
 #include "hittable.h"
 #include "ray.h"
+#include "texture.h"
 #include "vec3.h"
 
 // From: The color is determined by the light hitting the geometry
@@ -21,7 +22,8 @@ public:
 
 class Lambertian : public Material {
 public:
-  Lambertian(const color& albedo) : albedo_(albedo) {}
+  Lambertian(const color& albedo) : texture_(make_shared<SolidColor>(albedo)) {}
+  Lambertian(shared_ptr<Texture> texture) : texture_(texture) {}
 
   bool Scatter(const Ray& r_in, const HitRecord& rec, color& attenuation,
                Ray& scattered) const override {
@@ -32,12 +34,12 @@ public:
       scatter_direction = rec.normal;
 
     scattered = Ray(rec.p, scatter_direction, r_in.time());
-    attenuation = albedo_;
+    attenuation = texture_->Value(rec.u, rec.v, rec.p);
     return true;
   }
 
 private:
-  color albedo_;
+  shared_ptr<Texture> texture_;
 };
 
 class Metal : public Material {

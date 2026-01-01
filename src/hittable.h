@@ -11,6 +11,8 @@ class HitRecord {
 public:
   point3 p;  // hit point
   double t;  // ray parameter
+  double u;
+  double v;
   vec3 normal;
   bool front_face;
   shared_ptr<Material> mat;

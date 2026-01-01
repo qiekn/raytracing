@@ -1,11 +1,16 @@
-#include "sphere.h"
 #include "camera.h"
 #include "common.h"
 #include "hittable_list.h"
 #include "material.h"
+#include "sphere.h"
+#include "texture.h"
+#include "vec3.h"
 
 int main() {
   HittableList world;
+
+  auto checker = make_shared<CheckerTexture>(0.32, color(0.2, 0.3, 0.1), color(0.9, 0.9, 0.9));
+  world.Add(make_shared<Sphere>(point3(0, -1000, 0), 1000, make_shared<Lambertian>(checker)));
 
   auto ground_material = make_shared<Lambertian>(color(0.5, 0.5, 0.5));
   world.Add(make_shared<Sphere>(point3(0, -1000, 0), 1000, ground_material));

@@ -2,4 +2,8 @@
 
 ## Motion Blur
 
-![](../imgs/next/motion-blur.jpg)
+![motion blur](../imgs/next/motion-blur.jpg)
+
+## Texture
+
+![checkerd ground](../imgs/next/sphere-on-checkered-ground.jpg)
