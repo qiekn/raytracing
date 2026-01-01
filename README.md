@@ -81,5 +81,7 @@ We got this blue-to-white gradient depending on ray Y coordinate.
 ![always refracts](./imgs/20260101-5.jpg)
 
 Total internal reflection: Air bubble sometimes refracts, someties reflects
-
 ![total internal reflection](./imgs/20260101-6.jpg)
+
+Hollow glass sphere
+![hollow glass sphere](./imgs/20260101-7.jpg)
