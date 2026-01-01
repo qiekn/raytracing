@@ -105,3 +105,7 @@ Zooming in
 ## Defocus blur
 
 ![defocus blur](./imgs/one//20260101-11.jpg)
+
+## Final Render
+
+![final render](./imgs/one/a-final-render_low-quality.jpg)
