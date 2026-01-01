@@ -88,4 +88,14 @@ Hollow glass sphere
 
 ## Camera fov
 
-![](./imgs/20260101-8.jpg)
+A wide-angle view
+
+![wide-angle view](./imgs/20260101-8.jpg)
+
+A distant view
+
+![a distant view](./imgs/20260101-9.jpg)
+
+Zooming in
+
+![zooming in](./imgs/20260101-10.jpg)

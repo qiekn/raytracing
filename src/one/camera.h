@@ -38,18 +38,23 @@ private:
 
     pixel_samples_scale_ = 1.0 / samples_per_pixel;
 
-    camera_center_ = point3(0, 0, 0);
+    camera_center_ = lookfrom;
 
     // Determine viewport dimensions.
-    double focal_length = 1.0;
+    double focal_length = (lookfrom - lookat).length();
     double theta = Deg2Rad(vfov);
     double h = std::tan(theta / 2);
     double viewport_height = 2 * h * focal_length;
     double viewport_width = viewport_height * (double(image_width) / image_height_);
 
+    // Calculate the u,v,w unit basis vectors for the camera coordinate frame.
+    forward_ = unit_vector(lookat - lookfrom);   // w
+    right_ = unit_vector(cross(forward_, vup));  // v
+    up_ = cross(right_, forward_);               // u
+
     // Calculate the vectors across the horiziontal and down the vertical viewport edges.
-    vec3 viewport_u = vec3(viewport_width, 0, 0);
-    vec3 viewport_v = vec3(0, -viewport_height, 0);
+    vec3 viewport_u = viewport_width * right_;
+    vec3 viewport_v = viewport_height * -up_;
 
     // Calculate the horizontal and vertical **delta vectors** from pixel to pixel.
     pixel_delta_u_ = viewport_u / image_width;
@@ -57,7 +62,7 @@ private:
 
     // Calculate the localtion of the upper left pixel.
     vec3 viewport_upper_left =
-        camera_center_ - vec3(0, 0, focal_length) - viewport_u / 2 - viewport_v / 2;
+        camera_center_ + (focal_length * forward_) - viewport_u / 2 - viewport_v / 2;
     pixel00_loc_ = viewport_upper_left + 0.5 * (pixel_delta_u_ + pixel_delta_v_);
   }
 
@@ -106,11 +111,14 @@ private:
 
 // ----------------------------------------------------------------------------: data
 public:
-  double aspect_ratio = 1.0;   // Ratio of image width over height
-  int image_width = 100;       // Rendered image width in pexel count
-  int samples_per_pixel = 10;  // Count of random samples for each pixel
-  int max_depth = 10;          // Maximum number of ray bounces into scene
-  double vfov = 90;            // Vertical view angle (field of view)
+  double aspect_ratio = 1.0;          // Ratio of image width over height
+  int image_width = 100;              // Rendered image width in pexel count
+  int samples_per_pixel = 10;         // Count of random samples for each pixel
+  int max_depth = 10;                 // Maximum number of ray bounces into scene
+  double vfov = 90;                   // Vertical view angle (field of view)
+  point3 lookfrom = point3(0, 0, 0);  // Point camera is looking from
+  point3 lookat = point3(0, 0, -1);   // Point camera is looking at
+  vec3 vup = vec3(0, 1, 0);           // Camera-relative "up" direction
 
 private:
   // Calculate the image height, and ensure that it's at least 1.
@@ -120,4 +128,5 @@ private:
   point3 pixel00_loc_;          // Location of pixel 0, 0 (upper left)
   vec3 pixel_delta_u_;          // Offset to pixel to the right
   vec3 pixel_delta_v_;          // Offset to pixel below
+  vec3 right_, up_, forward_;              // Camera frame basis vectors
 };
