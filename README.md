@@ -18,7 +18,7 @@ cmake --build build -j${nproc}
 ./build/main > image.ppm
 ```
 
-![image.ppm](imgs/20251230-1.jpg)
+![image.ppm](imgs/one//20251230-1.jpg)
 
 ```txt
 P3
@@ -44,64 +44,64 @@ P3
 
 We got this blue-to-white gradient depending on ray Y coordinate.
 
-![blue-to-white gradient](./imgs/20251230-2.jpg)
+![blue-to-white gradient](./imgs/one//20251230-2.jpg)
 
 ## A simiple red sphere
 
-![red-sphere](./imgs/20251230-3.jpg)
+![red-sphere](./imgs/one//20251230-3.jpg)
 
 ## A sphere colored according to its normal vectors
 
-![colored-sphere-with-normal-vector](./imgs/20251230-4.jpg)
+![colored-sphere-with-normal-vector](./imgs/one//20251230-4.jpg)
 
 ## Normals-colored sphere with ground
 
-![normal-colored](./imgs/20251230-5.jpg)
+![normal-colored](./imgs/one//20251230-5.jpg)
 
 ## Antialiasing
 
-![after](./imgs/20251230-6.png)
+![after](./imgs/one//20251230-6.png)
 
 ## A diffuse sphere
 
-![duffuse sphere](./imgs/20260101-1.jpg)
+![duffuse sphere](./imgs/one//20260101-1.jpg)
 
 ## Gamma correction
 
-![gamma fix](./imgs/20260101-2.jpg)
+![gamma fix](./imgs/one//20260101-2.jpg)
 
 ## Metal
 
-![shiny metal](./imgs/20260101-3.jpg)
+![shiny metal](./imgs/one//20260101-3.jpg)
 
-![fuzz metal](./imgs/20260101-4.jpg)
+![fuzz metal](./imgs/one//20260101-4.jpg)
 
 ## Glass
 
-![always refracts](./imgs/20260101-5.jpg)
+![always refracts](./imgs/one//20260101-5.jpg)
 
 Total internal reflection: Air bubble sometimes refracts, someties reflects
 
-![total internal reflection](./imgs/20260101-6.jpg)
+![total internal reflection](./imgs/one//20260101-6.jpg)
 
 Hollow glass sphere
 
-![hollow glass sphere](./imgs/20260101-7.jpg)
+![hollow glass sphere](./imgs/one//20260101-7.jpg)
 
 ## Camera fov
 
 A wide-angle view
 
-![wide-angle view](./imgs/20260101-8.jpg)
+![wide-angle view](./imgs/one//20260101-8.jpg)
 
 A distant view
 
-![a distant view](./imgs/20260101-9.jpg)
+![a distant view](./imgs/one//20260101-9.jpg)
 
 Zooming in
 
-![zooming in](./imgs/20260101-10.jpg)
+![zooming in](./imgs/one//20260101-10.jpg)
 
 ## Defocus blur
 
-![defocus blur](./imgs/20260101-11.jpg)
+![defocus blur](./imgs/one//20260101-11.jpg)
