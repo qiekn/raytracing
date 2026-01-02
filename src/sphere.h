@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cmath>
+#include "aabb.h"
 #include "common.h"
 #include "hittable.h"
 #include "interval.h"
@@ -11,11 +12,19 @@ class Sphere : public Hittable {
 public:
   // Stationary Sphere
   Sphere(const point3& static_center, double radius, shared_ptr<Material> mat)
-      : center_(static_center, vec3(0, 0, 0)), radius_(std::fmax(0, radius)), mat_(mat) {}
+      : center_(static_center, vec3(0, 0, 0)), radius_(std::fmax(0, radius)), mat_(mat) {
+    auto half_diag = vec3(radius_, radius_, radius_);
+    bbox_ = AABB(static_center - half_diag, static_center + half_diag);
+  }
 
   // Moving Sphere
   Sphere(const point3& center1, const point3& center2, double radius, shared_ptr<Material> mat)
-      : center_(center1, center2 - center1), radius_(std::fmax(0, radius)), mat_(mat) {}
+      : center_(center1, center2 - center1), radius_(std::fmax(0, radius)), mat_(mat) {
+    auto rvec = vec3(radius_, radius_, radius_);
+    AABB box1(center_.at(0) - rvec, center_.at(0) + rvec);
+    AABB box2(center_.at(1) - rvec, center_.at(1) + rvec);
+    bbox_ = AABB(box1, box2);
+  }
 
   bool Hit(const Ray& r, Interval ray_t, HitRecord& rec) const override {
     https://tinyurl.com/5eynscbx
@@ -69,4 +78,5 @@ private:
   Ray center_;
   double radius_;
   shared_ptr<Material> mat_;
+  AABB bbox_;
 };
