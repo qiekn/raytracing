@@ -2,7 +2,9 @@
 
 #include "color.h"
 #include "common.h"
+#include "rtw_image.h"
 
+// ----------------------------------------------------------------------------: base class
 class Texture {
 public:
   virtual ~Texture() = default;
@@ -10,6 +12,7 @@ public:
   virtual color Value(double u, double v, const point3& p) const = 0;
 };
 
+// ----------------------------------------------------------------------------: derived class
 class SolidColor : public Texture {
 public:
   SolidColor(const color& albedo) : albedo_(albedo) {}
@@ -44,4 +47,29 @@ private:
   double scale_;
   shared_ptr<Texture> even_;
   shared_ptr<Texture> odd_;
+};
+
+class ImageTexture : public Texture {
+public:
+  ImageTexture(const char* filepath) : image_(filepath) {}
+
+  color Value(double u, double v, const point3& p) const override {
+    // If we have no texture data, then return solid cyan as a debugging aid.
+    if (image_.height() <= 0)
+      return color(0, 1, 1);
+
+    // Clamp input texture corrdinates to [0, 1] x [1, 0]
+    u = Interval(0, 1).Clamp(u);
+    v = 1.0 - Interval(0, 1).Clamp(v);  // Flip V to image coordinates
+
+    int i = int(u * image_.width());
+    int j = int(v * image_.height());
+    auto pixel = image_.pixel_data(i, j);
+
+    auto color_scale = 1.0 / 255.0;
+    return color(color_scale * pixel[0], color_scale * pixel[1], color_scale * pixel[2]);
+  }
+
+private:
+  rtw_image image_;
 };

@@ -9,3 +9,5 @@
 ![checkerd ground](../imgs/next/sphere-on-checkered-ground.jpg)
 
 ![checkered spheres](../imgs/next/checkered-spheres.jpg)
+
+![earth map](../imgs/next/earth-map.jpg)

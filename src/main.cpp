@@ -96,12 +96,35 @@ void CheckeredSpheres() {
   cam.Render(world);
 }
 
+void Earch() {
+  auto earth_texture = make_shared<ImageTexture>("earthmap.jpg");
+  auto earth_surface = make_shared<Lambertian>(earth_texture);
+  auto globe = make_shared<Sphere>(point3(0, 0, 0), 2, earth_surface);
+
+  Camera cam;
+
+  cam.aspect_ratio = 16.0 / 9.0;
+  cam.image_width = 400;
+  cam.samples_per_pixel = 100;
+  cam.max_depth = 50;
+
+  cam.vfov = 20;
+  cam.lookfrom = point3(0, 0, 12);
+  cam.lookat = point3(0, 0, 0);
+  cam.vup = vec3(0, 1, 0);
+
+  cam.defocus_angle = 0;
+
+  cam.Render(HittableList(globe));
+}
+
 // ----------------------------------------------------------------------------: main
 int main() {
   // clang-format off
-  switch (2) {
+  switch (3) {
     case 1: BouncingSpheres(); break;
     case 2: CheckeredSpheres(); break;
+    case 3: Earch(); break;
   }
   // clang-format on
 }
