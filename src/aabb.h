@@ -19,6 +19,12 @@ public:
     z = (a[2] <= b[2]) ? Interval(a[2], b[2]) : Interval(b[2], a[2]);
   }
 
+  AABB(const AABB& box0, const AABB& box1) {
+    x = Interval(box0.x, box1.x);
+    y = Interval(box0.y, box1.y);
+    z = Interval(box0.z, box1.z);
+  }
+
   // ----------------------------------------------------------------------------: methods
   // clang-format off
 

@@ -8,6 +8,12 @@ public:
 
   Interval(double min, double max) : min(min), max(max) {}
 
+  // Create the interval tightly enclosing the tow input intervals
+  Interval(const Interval& a,const Interval& b) {
+    min = std::min(a.min, b.min);
+    max = std::max(a.max, b.max);
+  }
+
   double Size() const { return max - min; }
 
   bool Contains(double x) const { return x >= min && x <= max; }
