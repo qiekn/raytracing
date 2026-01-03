@@ -24,6 +24,11 @@ public:
     auto v = p.y() - std::floor(p.y());
     auto w = p.z() - std::floor(p.z());
 
+    // Hermitain smoothing
+    u = u * u * (3 - 2 * u);
+    v = v * v * (3 - 2 * v);
+    w = w * w * (3 - 2 * w);
+
     auto i = int(std::floor(p.x()));
     auto j = int(std::floor(p.y()));
     auto k = int(std::floor(p.z()));
@@ -38,7 +43,7 @@ public:
             perm_y_[(j + dj) & 255] ^
             perm_z_[(k + dk) & 255]
           ];
-          // clang-format on
+    // clang-format on
 
     return TrilinearInterp(c, u, v, w);
   }
@@ -74,7 +79,7 @@ private:
                    (j * v + (1 - j) * (1 - v)) *
                    (k * w + (1 - k) * (1 - w)) *
                    c[i][j][k];
-          // clang-format on
+    // clang-format on
 
     return accum;
   }

@@ -17,3 +17,5 @@
 ![hashed random texture](../imgs/next/hashed-random-perlin-noise-phere.jpg)
 
 ![Trilinear interpolation](../imgs/next/trilinear-interpolation.jpg)
+
+![Trilinear interpolation smoothed](../imgs/next/trilinearaly-interpolated-smoothed.jpg)
