@@ -2,6 +2,7 @@
 #include "camera.h"
 #include "color.h"
 #include "common.h"
+#include "hittable.h"
 #include "hittable_list.h"
 #include "material.h"
 #include "quad.h"
@@ -270,8 +271,17 @@ void CornelBox() {
   world.Add(make_shared<Quad>(point3(0, 0, 555), vec3(555, 0, 0), vec3(0, 555, 0), white));
   // clang-format on
 
-  world.Add(box(point3(130, 0, 65), point3(295, 165, 230), white));
-  world.Add(box(point3(265, 0, 295), point3(430, 330, 460), white));
+  shared_ptr<Hittable> box1 = box(point3(0, 0, 0), point3(165, 330, 165), white);
+  box1 = make_shared<RotateY>(box1, 15);
+  box1 = make_shared<Translate>(box1, vec3(265, 0, 295));
+  world.Add(box1);
+
+  shared_ptr<Hittable> box2 = box(point3(0, 0, 0), point3(165, 165, 165), white);
+  box2 = make_shared<RotateY>(box2, -18);
+  box2 = make_shared<Translate>(box2, vec3(130, 0, 65));
+  world.Add(box2);
+
+  world = HittableList(make_shared<BvhNode>(world));
 
   Camera cam;
 
