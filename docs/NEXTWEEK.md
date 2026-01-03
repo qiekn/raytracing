@@ -39,3 +39,5 @@
 ![rectangle light](../imgs/next/rectangle-light.jpg)
 
 ![rectangle and sphere lights](../imgs/next/rectangle-and-sphere-lights.jpg)
+
+![standard cornell box](../imgs/next/blank-cornell-box.jpg)

@@ -253,10 +253,45 @@ void SimpleLights() {
   cam.Render(world);
 }
 
+void CornelBox() {
+  HittableList world;
+
+  auto red = make_shared<Lambertian>(color(.65, .05, .05));
+  auto white = make_shared<Lambertian>(color(.73, .73, .73));
+  auto green = make_shared<Lambertian>(color(.12, .45, .15));
+  auto light = make_shared<DiffuseLight>(color(15, 15, 15));
+
+  world.Add(make_shared<Quad>(point3(555, 0, 0), vec3(0, 555, 0), vec3(0, 0, 555), green));
+  world.Add(make_shared<Quad>(point3(0, 0, 0), vec3(0, 555, 0), vec3(0, 0, 555), red));
+  world.Add(
+      make_shared<Quad>(point3(343, 554, 332), vec3(-130, 0, 0), vec3(0, 0, -105), light));
+  world.Add(make_shared<Quad>(point3(0, 0, 0), vec3(555, 0, 0), vec3(0, 0, 555), white));
+  world.Add(
+      make_shared<Quad>(point3(555, 555, 555), vec3(-555, 0, 0), vec3(0, 0, -555), white));
+  world.Add(make_shared<Quad>(point3(0, 0, 555), vec3(555, 0, 0), vec3(0, 555, 0), white));
+
+  Camera cam;
+
+  cam.aspect_ratio = 1.0;
+  cam.image_width = 600;
+  cam.samples_per_pixel = 200;
+  cam.max_depth = 50;
+  cam.background = color(0, 0, 0);
+
+  cam.vfov = 40;
+  cam.lookfrom = point3(278, 278, -800);
+  cam.lookat = point3(278, 278, 0);
+  cam.vup = vec3(0, 1, 0);
+
+  cam.defocus_angle = 0;
+
+  cam.Render(world);
+}
+
 // ----------------------------------------------------------------------------: main
 int main() {
   // clang-format off
-  switch (7) {
+  switch (8) {
     // case 1
     // BVH on:  Render time: 52.8369s
     // BVH off: Render time: 236.774s
@@ -267,6 +302,7 @@ int main() {
     case 5: Quads(); break;
     case 6: EasterEggs(); break;
     case 7: SimpleLights(); break;
+    case 8: CornelBox(); break; // Render time: 311.929s
   }
   // clang-format on
 }
