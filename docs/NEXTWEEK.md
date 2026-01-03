@@ -33,3 +33,7 @@
 ![quads](../imgs/next/quads.jpg)
 
 ![easter eggs](../imgs/next/easter-eggs.jpg)
+
+## Lights
+
+![rectangle light](../imgs/next/rectangle-light.jpg)

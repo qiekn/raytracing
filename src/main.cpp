@@ -224,10 +224,38 @@ void EasterEggs() {
   cam.Render(world);
 }
 
+void SimpleLights() {
+  HittableList world;
+
+  auto pertext = make_shared<NoiseTexture>(4);
+  world.Add(make_shared<Sphere>(point3(0, -1000, 0), 1000, make_shared<Lambertian>(pertext)));
+  world.Add(make_shared<Sphere>(point3(0, 2, 0), 2, make_shared<Lambertian>(pertext)));
+
+  auto difflight = make_shared<DiffuseLight>(color(4, 4, 4));
+  world.Add(make_shared<Quad>(point3(3, 1, -2), vec3(2, 0, 0), vec3(0, 2, 0), difflight));
+
+  Camera cam;
+
+  cam.aspect_ratio = 16.0 / 9.0;
+  cam.image_width = 400;
+  cam.samples_per_pixel = 100;
+  cam.max_depth = 50;
+  cam.background = color(0, 0, 0);
+
+  cam.vfov = 20;
+  cam.lookfrom = point3(26, 3, 6);
+  cam.lookat = point3(0, 2, 0);
+  cam.vup = vec3(0, 1, 0);
+
+  cam.defocus_angle = 0;
+
+  cam.Render(world);
+}
+
 // ----------------------------------------------------------------------------: main
 int main() {
   // clang-format off
-  switch (6) {
+  switch (7) {
     // case 1
     // BVH on:  Render time: 52.8369s
     // BVH off: Render time: 236.774s
@@ -237,6 +265,7 @@ int main() {
     case 4: PerlinSphere(); break;
     case 5: Quads(); break;
     case 6: EasterEggs(); break;
+    case 7: SimpleLights(); break;
   }
   // clang-format on
 }
