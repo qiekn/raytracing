@@ -5,9 +5,10 @@
 #include "color.h"
 #include "common.h"
 #include "hittable.h"
-#include "ray.h"
-#include "vec3.h"
 #include "material.h" // IWYU pragma: keep
+#include "ray.h"
+#include "timer.h"
+#include "vec3.h"
 
 class Camera {
 // ----------------------------------------------------------------------------: methods
@@ -17,6 +18,7 @@ public:
 
     std::cout << "P3\n" << image_width << ' ' << image_height_ << "\n255\n";
 
+    Timer timer;
     for (int j = 0; j < image_height_; j++) {
       std::clog << "\rScanline remaining: " << (image_height_ - j) << ' ' << std::flush;
       for (int i = 0; i < image_width; i++) {
@@ -28,7 +30,7 @@ public:
         write_color(std::cout, pixel_samples_scale_ * pixel_color);
       }
     }
-    std::clog << "\rDone.                 \n";
+    std::clog << "\rDone. Render time: " << timer.Elapsed() << "s\n";
   }
 
 private:
