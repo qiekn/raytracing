@@ -21,8 +21,12 @@ public:
   }
 
   BvhNode(std::vector<shared_ptr<Hittable>>& objects, size_t start, size_t end) {
-    // Randomly choose an axis
-    int axis = RandomInt(0, 2);
+    // Build the bounding box of the span of source objects
+    bbox_ = AABB::empty;
+    for (size_t object_index = start; object_index < end; object_index++)
+      bbox_ = AABB(bbox_, objects[object_index]->BoundingBox());
+    int axis = bbox_.LongestAxis();
+
     // clang-format off
     auto comparator = (axis == 0) ? BoxCompareX
                     : (axis == 1) ? BoxCompareY 

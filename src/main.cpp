@@ -56,7 +56,7 @@ void BouncingSpheres() {
   auto material3 = make_shared<Metal>(color(0.7, 0.6, 0.5), 0.0);
   world.Add(make_shared<Sphere>(point3(4, 1, 0), 1.0, material3));
 
-  world = HittableList(make_shared<BvhNode>(world));
+  // world = HittableList(make_shared<BvhNode>(world));
 
   Camera cam;
 
@@ -126,7 +126,10 @@ void Earch() {
 // ----------------------------------------------------------------------------: main
 int main() {
   // clang-format off
-  switch (2) {
+  switch (1) {
+    // case 1
+    // BVH on:  Render time: 52.8369s
+    // BVH off: Render time: 236.774s
     case 1: BouncingSpheres(); break;
     case 2: CheckeredSpheres(); break;
     case 3: Earch(); break;

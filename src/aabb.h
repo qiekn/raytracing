@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include "interval.h"
 #include "ray.h"
 #include "vec3.h"
@@ -61,8 +62,25 @@ public:
     return true;
   }
 
+  // Return the index of the longest axis of the bounding box
+  int LongestAxis() const {
+    double x_size = x.Size();
+    double y_size = y.Size();
+    double z_size = z.Size();
+
+    if (x_size > y_size && x_size > z_size)
+        return 0;
+    if (y_size > z_size)
+        return 1;
+    return 2;
+  }
+
 // ----------------------------------------------------------------------------: data
 public:
   Interval x, y, z; // Three one-dimensional intervals representing the AABB extents on each axis.
+  static const AABB empty, universe;
   // clang-format on
 };
+
+const AABB AABB::empty = AABB(Interval::empty, Interval::empty, Interval::empty);
+const AABB AABB::universe = AABB(Interval::universe, Interval::universe, Interval::universe);
