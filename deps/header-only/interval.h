@@ -40,3 +40,11 @@ public:
 
 const Interval Interval::empty    = Interval( kInfinity, -kInfinity);
 const Interval Interval::universe = Interval(-kInfinity,  kInfinity);
+
+Interval operator+(const Interval& ival, double displacement) {
+  return Interval(ival.min + displacement, ival.max + displacement);
+}
+
+Interval operator+(double displacement, const Interval& ival) {
+  return ival + displacement;
+}
