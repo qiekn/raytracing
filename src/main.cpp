@@ -182,10 +182,43 @@ void Quads() {
   cam.Render(world);
 }
 
+void EasterEggs() {
+  HittableList world;
+
+  // Materials
+  auto red = make_shared<Lambertian>(color(1.0, 0.2, 0.2));
+  auto green = make_shared<Lambertian>(color(0.2, 1.0, 0.2));
+  auto blue = make_shared<Lambertian>(color(0.2, 0.2, 1.0));
+  auto orange = make_shared<Lambertian>(color(1.0, 0.5, 0.0));
+  auto teal = make_shared<Lambertian>(color(0.2, 0.8, 0.8));
+
+  // Primitives: 2x2 grid layout
+  world.Add(make_shared<Quad>(point3(-2.0, 0.1, 0), vec3(1.8, 0, 0), vec3(0, 1.8, 0), red));
+  world.Add(make_shared<Triangle>(point3(0.2, 0.1, 0), vec3(1.8, 0, 0), vec3(0, 1.8, 0), green));
+  world.Add(make_shared<Ellipse>(point3(-1.1, -1.1, 0), vec3(0.9, 0, 0), vec3(0, 0.9, 0), blue));
+  world.Add(make_shared<Annulus>(point3(1.1, -1.1, 0), vec3(0.9, 0, 0), vec3(0, 0.9, 0), 0.5, orange));
+
+  Camera cam;
+
+  cam.aspect_ratio = 1.0;
+  cam.image_width = 400;
+  cam.samples_per_pixel = 100;
+  cam.max_depth = 50;
+
+  cam.vfov = 20;
+  cam.lookfrom = point3(0, 0, 12);
+  cam.lookat = point3(0, 0, 0);
+  cam.vup = vec3(0, 1, 0);
+
+  cam.defocus_angle = 0;
+
+  cam.Render(world);
+}
+
 // ----------------------------------------------------------------------------: main
 int main() {
   // clang-format off
-  switch (5) {
+  switch (6) {
     // case 1
     // BVH on:  Render time: 52.8369s
     // BVH off: Render time: 236.774s
@@ -194,6 +227,7 @@ int main() {
     case 3: Earch(); break;
     case 4: PerlinSphere(); break;
     case 5: Quads(); break;
+    case 6: EasterEggs(); break;
   }
   // clang-format on
 }

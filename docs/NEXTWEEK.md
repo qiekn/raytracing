@@ -31,3 +31,5 @@
 ## Quads
 
 ![quads](../imgs/next/quads.jpg)
+
+![easter eggs](../imgs/next/easter-eggs.jpg)

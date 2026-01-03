@@ -1,8 +1,10 @@
 #pragma once
 
+#include <cmath>
 #include "common.h"
 #include "hittable.h"
 #include "interval.h"
+#include "material.h"
 #include "vec3.h"
 
 class Quad : public Hittable {
@@ -25,7 +27,7 @@ public:
 
   AABB BoundingBox() const override { return bbox_; }
 
-  bool Hit(const Ray& r, Interval ray_t, HitRecord& rec) const override {
+  virtual bool Hit(const Ray& r, Interval ray_t, HitRecord& rec) const override {
     auto denom = dot(normal_, r.direction());  // denom 是分母项的意思
 
     // No hit if the ray is parallel to the plane.
@@ -68,7 +70,7 @@ public:
     return true;
   }
 
-private:
+protected:
   point3 origin_;
   vec3 u_, v_;
   vec3 w_;
@@ -77,4 +79,61 @@ private:
 
   vec3 normal_;
   double D_;
+};
+
+// ----------------------------------------------------------------------------: easter eggs
+class Triangle : public Quad {
+public:
+  Triangle(const point3& o, const vec3& aa, const vec3& ab, shared_ptr<Material> mat)
+      : Quad(o, aa, ab, mat) {}
+
+  virtual bool IsInterior(double a, double b, HitRecord& rec) const override {
+    if ((a < 0) || (b < 0) || (a + b > 1))
+      return false;
+
+    rec.u = a;
+    rec.v = b;
+    return true;
+  }
+};
+
+class Ellipse : public Quad {
+public:
+  Ellipse(const point3& center, const vec3& u, const vec3& v,
+          shared_ptr<Material> mat)
+      : Quad(center, u, v, mat) {}
+
+  void SetBoundingBox() override { bbox_ = AABB(origin_ - u_ - v_, origin_ + u_ + v_); }
+
+  bool IsInterior(double a, double b, HitRecord& rec) const override {
+    if ((a * a + b * b) > 1)
+      return false;
+
+    rec.u = a / 2 + 0.5;
+    rec.v = b / 2 + 0.5;
+    return true;
+  }
+};
+
+// 圆环
+class Annulus : public Quad {
+public:
+  Annulus(const point3& center, const vec3& u, const vec3& v, double inner,
+          shared_ptr<Material> mat)
+      : Quad(center, u, v, mat), inner_(inner) {}
+
+  void SetBoundingBox() override { bbox_ = AABB(origin_ - u_ - v_, origin_ + u_ + v_); }
+
+  bool IsInterior(double a, double b, HitRecord& rec) const override {
+    auto center_dist = std::sqrt(a * a + b * b);
+    if ((center_dist < inner_) || (center_dist > 1))
+      return false;
+
+    rec.u = a / 2 + 0.5;
+    rec.v = b / 2 + 0.5;
+    return true;
+  }
+
+private:
+  double inner_;
 };
