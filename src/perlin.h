@@ -43,6 +43,20 @@ public:
     return PerlinInterp(c, u, v, w);
   }
 
+  double Turb(const point3& p, int depth) const {
+    auto accum = 0.0;
+    auto temp_p = p;
+    auto weight = 1.0;
+
+    for (int i = 0; i < depth; i++) {
+      accum += weight * Noise(temp_p);
+      weight *= 0.5;
+      temp_p *= 2;
+    }
+
+    return std::fabs(accum);
+  }
+
 private:
   static void PerlinGeneratePerm(int* p) {
     for (int i = 0; i < point_count_; i++)

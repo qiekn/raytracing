@@ -23,3 +23,5 @@
 ![perlin texture higher frequency](../imgs/next/perlin-texture-higher-frequency.jpg)
 
 ![perlin texture shifted off integer values](../imgs/next/perlin-texture-shifted-off-integer-values.jpg)
+
+![perlin texture with turbulence](../imgs/next/perlin-texture-with-turbulence.jpg)
