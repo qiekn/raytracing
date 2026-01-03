@@ -126,7 +126,7 @@ void Earch() {
 void PerlinSphere() {
   HittableList world;
 
-  auto pertext = make_shared<NoiseTexture>();
+  auto pertext = make_shared<NoiseTexture>(4);
   world.Add(make_shared<Sphere>(point3(0, -1000, 0), 1000, make_shared<Lambertian>(pertext)));
   world.Add(make_shared<Sphere>(point3(0, 2, 0), 2, make_shared<Lambertian>(pertext)));
 

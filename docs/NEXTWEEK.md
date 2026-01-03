@@ -19,3 +19,5 @@
 ![Trilinear interpolation](../imgs/next/trilinear-interpolation.jpg)
 
 ![Trilinear interpolation smoothed](../imgs/next/trilinearaly-interpolated-smoothed.jpg)
+
+![perlin texture higher frequency](../imgs/next/perlin-texture-higher-frequency.jpg)
