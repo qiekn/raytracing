@@ -1,6 +1,5 @@
 #pragma once
 
-#include <algorithm>
 #include "interval.h"
 #include "ray.h"
 #include "vec3.h"
@@ -10,7 +9,9 @@ public:
   // ----------------------------------------------------------------------------: constructors
   AABB() {}  // The default AABB is empty, since intervals are empty by default.
 
-  AABB(const Interval& x, const Interval& y, const Interval& z) : x(x), y(y), z(z) {}
+  AABB(const Interval& x, const Interval& y, const Interval& z) : x(x), y(y), z(z) {
+    PadToMinmums();
+  }
 
   AABB(const point3& a, const point3& b) {
     // Treat the two points a and b as extrema for the bounding box,
@@ -18,6 +19,8 @@ public:
     x = (a[0] <= b[0]) ? Interval(a[0], b[0]) : Interval(b[0], a[0]);
     y = (a[1] <= b[1]) ? Interval(a[1], b[1]) : Interval(b[1], a[1]);
     z = (a[2] <= b[2]) ? Interval(a[2], b[2]) : Interval(b[2], a[2]);
+
+    PadToMinmums();
   }
 
   AABB(const AABB& box0, const AABB& box1) {
@@ -73,6 +76,15 @@ public:
     if (y_size > z_size)
         return 1;
     return 2;
+  }
+
+private:
+  // Adjust the AABB so that no side is narrower than some delta, padding if necessary.
+  void PadToMinmums() {
+    double delta = 0.0001;
+    if (x.Size() < delta) x = x.Expand(delta);
+    if (y.Size() < delta) y = y.Expand(delta);
+    if (z.Size() < delta) z = z.Expand(delta);
   }
 
 // ----------------------------------------------------------------------------: data

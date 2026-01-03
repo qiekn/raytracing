@@ -27,3 +27,7 @@
 ![perlin texture with turbulence](../imgs/next/perlin-texture-with-turbulence.jpg)
 
 ![perlin texture marbled](../imgs/next/perlin-texture-marbled.jpg)
+
+## Quads
+
+![quads](../imgs/next/quads.jpg)
