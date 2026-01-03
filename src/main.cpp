@@ -65,6 +65,7 @@ void BouncingSpheres() {
   cam.image_width = 400;
   cam.samples_per_pixel = 100;
   cam.max_depth = 50;
+  cam.background = color(0.70, 0.90, 1.00);
 
   cam.vfov = 20;
   cam.lookfrom = point3(13, 2, 3);
@@ -92,6 +93,7 @@ void CheckeredSpheres() {
   cam.image_width = 400;
   cam.samples_per_pixel = 100;
   cam.max_depth = 50;
+  cam.background = color(0.70, 0.90, 1.00);
 
   cam.vfov = 20;
   cam.lookfrom = point3(13, 2, 3);
@@ -113,6 +115,7 @@ void Earch() {
   cam.image_width = 400;
   cam.samples_per_pixel = 100;
   cam.max_depth = 50;
+  cam.background = color(0.70, 0.90, 1.00);
 
   cam.vfov = 20;
   cam.lookfrom = point3(0, 0, 12);
@@ -137,6 +140,7 @@ void PerlinSphere() {
   cam.image_width = 400;
   cam.samples_per_pixel = 100;
   cam.max_depth = 50;
+  cam.background = color(0.70, 0.90, 1.00);
 
   cam.vfov = 20;
   cam.lookfrom = point3(12, 2, 3);
@@ -171,6 +175,7 @@ void Quads() {
   cam.image_width = 400;
   cam.samples_per_pixel = 100;
   cam.max_depth = 50;
+  cam.background = color(0.70, 0.90, 1.00);
 
   cam.vfov = 80;
   cam.lookfrom = point3(0, 0, 9);
@@ -194,9 +199,12 @@ void EasterEggs() {
 
   // Primitives: 2x2 grid layout
   world.Add(make_shared<Quad>(point3(-2.0, 0.1, 0), vec3(1.8, 0, 0), vec3(0, 1.8, 0), red));
-  world.Add(make_shared<Triangle>(point3(0.2, 0.1, 0), vec3(1.8, 0, 0), vec3(0, 1.8, 0), green));
-  world.Add(make_shared<Ellipse>(point3(-1.1, -1.1, 0), vec3(0.9, 0, 0), vec3(0, 0.9, 0), blue));
-  world.Add(make_shared<Annulus>(point3(1.1, -1.1, 0), vec3(0.9, 0, 0), vec3(0, 0.9, 0), 0.5, orange));
+  world.Add(
+      make_shared<Triangle>(point3(0.2, 0.1, 0), vec3(1.8, 0, 0), vec3(0, 1.8, 0), green));
+  world.Add(
+      make_shared<Ellipse>(point3(-1.1, -1.1, 0), vec3(0.9, 0, 0), vec3(0, 0.9, 0), blue));
+  world.Add(make_shared<Annulus>(point3(1.1, -1.1, 0), vec3(0.9, 0, 0), vec3(0, 0.9, 0), 0.5,
+                                 orange));
 
   Camera cam;
 
@@ -204,6 +212,7 @@ void EasterEggs() {
   cam.image_width = 400;
   cam.samples_per_pixel = 100;
   cam.max_depth = 50;
+  cam.background = color(0.70, 0.90, 1.00);
 
   cam.vfov = 20;
   cam.lookfrom = point3(0, 0, 12);

@@ -5,6 +5,7 @@
 #include "color.h"
 #include "common.h"
 #include "hittable.h"
+#include "interval.h"
 #include "material.h" // IWYU pragma: keep
 #include "ray.h"
 #include "timer.h"
@@ -99,22 +100,21 @@ private:
       return color(0, 0, 0);
 
     HitRecord rec;
-    if (world.Hit(r, Interval(0.001, kInfinity), rec)) {
-      Ray scattered;
-      color attenuation;
-      if (rec.mat->Scatter(r, rec, attenuation, scattered))
-        return attenuation * RayColor(scattered, depth - 1, world);
-      return color(0, 0, 0);
-    }
 
-    vec3 unit_direction = unit_vector(r.direction());
-    // -1..1 -> 0..2 -> 0..1
-    double a = 0.5 * (unit_direction.y() + 1.0);
-    // A simple gradient (white to blue)
-    // a=0       : white
-    // a-> 0 ~ 1 : blend white & blup
-    // a=1       : blue
-    return (1.0 - a) * color(1.0, 1.0, 1.0) + a * color(0.5, 0.7, 1.0);
+    //  If the ray hits nothing, retur nthe background color
+    if (!world.Hit(r, Interval(0.001, kInfinity), rec))
+      return background;
+
+    Ray scattered;
+    color attenuation;
+    color color_from_emission = rec.mat->Emitted(rec.u, rec.v, rec.p);
+
+    if (!rec.mat->Scatter(r, rec, attenuation, scattered))
+      return color_from_emission;
+
+    color color_from_scatter = attenuation * RayColor(scattered, depth - 1, world);
+
+    return color_from_emission + color_from_scatter;
   }
 
   // Returns the vector to a ramdom point in the [-0.5, -0.5]~[0.5, 0.5] unit squre.
@@ -128,6 +128,7 @@ public:
   int image_width = 100;              // Rendered image width in pexel count
   int samples_per_pixel = 10;         // Count of random samples for each pixel
   int max_depth = 10;                 // Maximum number of ray bounces into scene
+  color background;                   // Scene background color
   double vfov = 90;                   // Vertical view angle (field of view)
   point3 lookfrom = point3(0, 0, 0);  // Point camera is looking from
   point3 lookat = point3(0, 0, -1);   // Point camera is looking at
