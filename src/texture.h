@@ -2,6 +2,7 @@
 
 #include "color.h"
 #include "common.h"
+#include "perlin.h"
 #include "rtw_image.h"
 
 // ----------------------------------------------------------------------------: base class
@@ -72,4 +73,16 @@ public:
 
 private:
   rtw_image image_;
+};
+
+class NoiseTexture : public Texture {
+public:
+  NoiseTexture() {}
+
+  color Value(double u, double v, const point3& p) const override {
+    return color(1,1,1) * perlin_.Noise(p);
+  }
+  
+private:
+  Perlin perlin_;
 };

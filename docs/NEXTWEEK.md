@@ -11,3 +11,7 @@
 ![checkered spheres](../imgs/next/checkered-spheres.jpg)
 
 ![earth map](../imgs/next/earth-map.jpg)
+
+## Perlin Noise
+
+![hashed random texture](../imgs/next/hashed-random-perlin-noise-phere.jpg)

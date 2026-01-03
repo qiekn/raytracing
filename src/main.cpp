@@ -123,16 +123,41 @@ void Earch() {
   cam.Render(HittableList(globe));
 }
 
+void PerlinSphere() {
+  HittableList world;
+
+  auto pertext = make_shared<NoiseTexture>();
+  world.Add(make_shared<Sphere>(point3(0, -1000, 0), 1000, make_shared<Lambertian>(pertext)));
+  world.Add(make_shared<Sphere>(point3(0, 2, 0), 2, make_shared<Lambertian>(pertext)));
+
+  Camera cam;
+
+  cam.aspect_ratio = 16.0 / 9.0;
+  cam.image_width = 400;
+  cam.samples_per_pixel = 100;
+  cam.max_depth = 50;
+
+  cam.vfov = 20;
+  cam.lookfrom = point3(12, 2, 3);
+  cam.lookat = point3(0, 0, 0);
+  cam.vup = vec3(0, 1, 0);
+
+  cam.defocus_angle = 0;
+
+  cam.Render(world);
+}
+
 // ----------------------------------------------------------------------------: main
 int main() {
   // clang-format off
-  switch (1) {
+  switch (4) {
     // case 1
     // BVH on:  Render time: 52.8369s
     // BVH off: Render time: 236.774s
     case 1: BouncingSpheres(); break;
     case 2: CheckeredSpheres(); break;
     case 3: Earch(); break;
+    case 4: PerlinSphere(); break;
   }
   // clang-format on
 }
