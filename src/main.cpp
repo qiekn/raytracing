@@ -232,6 +232,7 @@ void SimpleLights() {
   world.Add(make_shared<Sphere>(point3(0, 2, 0), 2, make_shared<Lambertian>(pertext)));
 
   auto difflight = make_shared<DiffuseLight>(color(4, 4, 4));
+  world.Add(make_shared<Sphere>(point3(0, 7, 0), 2, difflight));
   world.Add(make_shared<Quad>(point3(3, 1, -2), vec3(2, 0, 0), vec3(0, 2, 0), difflight));
 
   Camera cam;

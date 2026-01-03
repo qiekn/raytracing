@@ -37,3 +37,5 @@
 ## Lights
 
 ![rectangle light](../imgs/next/rectangle-light.jpg)
+
+![rectangle and sphere lights](../imgs/next/rectangle-and-sphere-lights.jpg)
