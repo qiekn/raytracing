@@ -43,10 +43,10 @@ public:
     for (int axis = 0; axis < 3; axis++) {
       https://tinyurl.com/2t5s7ptj
       const Interval& ax = AxisInterval(axis);
-      const double ad = ray_dir[axis];
+      const double ad_inv = 1.0 / ray_dir[axis];
 
-      auto t0 = (ax.min - ray_orig[axis]) / ad;
-      auto t1 = (ax.max - ray_orig[axis]) / ad;
+      auto t0 = (ax.min - ray_orig[axis]) * ad_inv;
+      auto t1 = (ax.max - ray_orig[axis]) * ad_inv;
 
       if (t0 < t1) {
         if (t0 > ray_t.min) ray_t.min = t0;

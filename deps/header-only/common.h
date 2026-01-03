@@ -1,6 +1,5 @@
 #pragma once
 
-#include <cstdlib>
 #include <limits>
 #include <memory>
 #include <random>
@@ -32,4 +31,9 @@ inline double RandomDouble() {
 // Returns a random real in [min, max)
 inline double RandomDouble(double min, double max) {
   return min + (max - min) * RandomDouble();
+}
+
+// Returns a random integer in [min, max]
+inline int RandomInt(int min, int max) {
+  return int(RandomDouble(min, max + 1));
 }

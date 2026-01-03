@@ -58,6 +58,8 @@ public:
     return true;
   }
 
+  AABB BoundingBox() const override { return bbox_; }
+
 private:
   static void GetSphereUV(const point3& p, double& u, double& v) {
     // p: a given point on the sphere of radius one, centered at the origin.

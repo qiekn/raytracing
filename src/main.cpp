@@ -1,3 +1,4 @@
+#include "bvh.h"
 #include "camera.h"
 #include "color.h"
 #include "common.h"
@@ -55,6 +56,8 @@ void BouncingSpheres() {
   auto material3 = make_shared<Metal>(color(0.7, 0.6, 0.5), 0.0);
   world.Add(make_shared<Sphere>(point3(4, 1, 0), 1.0, material3));
 
+  world = HittableList(make_shared<BvhNode>(world));
+
   Camera cam;
 
   cam.aspect_ratio = 16.0 / 9.0;
@@ -80,6 +83,8 @@ void CheckeredSpheres() {
 
   world.Add(make_shared<Sphere>(point3(0, -10, 0), 10, make_shared<Lambertian>(checker)));
   world.Add(make_shared<Sphere>(point3(0, 10, 0), 10, make_shared<Lambertian>(checker)));
+
+  world = HittableList(make_shared<BvhNode>(world));
 
   Camera cam;
   cam.aspect_ratio = 16.0 / 9.0;
@@ -121,7 +126,7 @@ void Earch() {
 // ----------------------------------------------------------------------------: main
 int main() {
   // clang-format off
-  switch (3) {
+  switch (2) {
     case 1: BouncingSpheres(); break;
     case 2: CheckeredSpheres(); break;
     case 3: Earch(); break;
