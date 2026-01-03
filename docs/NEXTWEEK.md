@@ -25,3 +25,5 @@
 ![perlin texture shifted off integer values](../imgs/next/perlin-texture-shifted-off-integer-values.jpg)
 
 ![perlin texture with turbulence](../imgs/next/perlin-texture-with-turbulence.jpg)
+
+![perlin texture marbled](../imgs/next/perlin-texture-marbled.jpg)

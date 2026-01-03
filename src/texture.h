@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cmath>
 #include "color.h"
 #include "common.h"
 #include "perlin.h"
@@ -80,9 +81,9 @@ public:
   NoiseTexture(double scale) : scale_(scale) {}
 
   color Value(double u, double v, const point3& p) const override {
-    return color(1,1,1) * perlin_.Turb(p, 7);
+    return color(.5, .5, .5) * (1 + std::sin(scale_ * p.z() + 10 * perlin_.Turb(p, 7)));
   }
-  
+
 private:
   Perlin perlin_;
   double scale_;
