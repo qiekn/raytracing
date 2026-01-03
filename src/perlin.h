@@ -20,15 +20,27 @@ public:
 
   // Return a noise value for a given 3D point
   double Noise(const point3& p) const {
-    // Scale the coordinates and convert to integer grid indices
-    // The factor 4 controls the noise frequency
-    auto i = int(4 * p.x()) & 255;
-    auto j = int(4 * p.y()) & 255;
-    auto k = int(4 * p.z()) & 255;
+    auto u = p.x() - std::floor(p.x());
+    auto v = p.y() - std::floor(p.y());
+    auto w = p.z() - std::floor(p.z());
 
-    // Hash the coordinates using permutation tables and XOR,
-    // then use the result to index into the random value table
-    return randfloat_[perm_x_[i] ^ perm_y_[j] ^ perm_z_[k]];
+    auto i = int(std::floor(p.x()));
+    auto j = int(std::floor(p.y()));
+    auto k = int(std::floor(p.z()));
+    double c[2][2][2];
+
+    for (int di = 0; di < 2; di++)
+      for (int dj = 0; dj < 2; dj++)
+        for (int dk = 0; dk < 2; dk++)
+          // clang-format off
+          c[di][dj][dk] = randfloat_[
+            perm_x_[(i + di) & 255] ^
+            perm_y_[(j + dj) & 255] ^
+            perm_z_[(k + dk) & 255]
+          ];
+          // clang-format on
+
+    return TrilinearInterp(c, u, v, w);
   }
 
 private:
@@ -50,6 +62,21 @@ private:
       p[i] = p[target];
       p[target] = tmp;
     }
+  }
+
+  static double TrilinearInterp(double c[2][2][2], double u, double v, double w) {
+    auto accum = 0.0;
+    for (int i = 0; i < 2; i++)
+      for (int j = 0; j < 2; j++)
+        for (int k = 0; k < 2; k++)
+          // clang-format off
+          accum += (i * u + (1 - i) * (1 - u)) *
+                   (j * v + (1 - j) * (1 - v)) *
+                   (k * w + (1 - k) * (1 - w)) *
+                   c[i][j][k];
+          // clang-format on
+
+    return accum;
   }
 
 private:

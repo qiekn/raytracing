@@ -15,3 +15,5 @@
 ## Perlin Noise
 
 ![hashed random texture](../imgs/next/hashed-random-perlin-noise-phere.jpg)
+
+![Trilinear interpolation](../imgs/next/trilinear-interpolation.jpg)
