@@ -41,3 +41,7 @@
 ![rectangle and sphere lights](../imgs/next/rectangle-and-sphere-lights.jpg)
 
 ![standard cornell box](../imgs/next/blank-cornell-box.jpg)
+
+## Instance
+
+![cornell box with two blocks](../imgs/next/cornell-box-with-two-blocks.jpg)

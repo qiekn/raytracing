@@ -261,14 +261,17 @@ void CornelBox() {
   auto green = make_shared<Lambertian>(color(.12, .45, .15));
   auto light = make_shared<DiffuseLight>(color(15, 15, 15));
 
+  // clang-format off
   world.Add(make_shared<Quad>(point3(555, 0, 0), vec3(0, 555, 0), vec3(0, 0, 555), green));
   world.Add(make_shared<Quad>(point3(0, 0, 0), vec3(0, 555, 0), vec3(0, 0, 555), red));
-  world.Add(
-      make_shared<Quad>(point3(343, 554, 332), vec3(-130, 0, 0), vec3(0, 0, -105), light));
+  world.Add(make_shared<Quad>(point3(343, 554, 332), vec3(-130, 0, 0), vec3(0, 0, -105), light));
   world.Add(make_shared<Quad>(point3(0, 0, 0), vec3(555, 0, 0), vec3(0, 0, 555), white));
-  world.Add(
-      make_shared<Quad>(point3(555, 555, 555), vec3(-555, 0, 0), vec3(0, 0, -555), white));
+  world.Add(make_shared<Quad>(point3(555, 555, 555), vec3(-555, 0, 0), vec3(0, 0, -555), white));
   world.Add(make_shared<Quad>(point3(0, 0, 555), vec3(555, 0, 0), vec3(0, 555, 0), white));
+  // clang-format on
+
+  world.Add(box(point3(130, 0, 65), point3(295, 165, 230), white));
+  world.Add(box(point3(265, 0, 295), point3(430, 330, 460), white));
 
   Camera cam;
 

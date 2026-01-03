@@ -1,8 +1,10 @@
 #pragma once
 
 #include <cmath>
+#include <functional>
 #include "common.h"
 #include "hittable.h"
+#include "hittable_list.h"
 #include "interval.h"
 #include "material.h"
 #include "vec3.h"
@@ -99,8 +101,7 @@ public:
 
 class Ellipse : public Quad {
 public:
-  Ellipse(const point3& center, const vec3& u, const vec3& v,
-          shared_ptr<Material> mat)
+  Ellipse(const point3& center, const vec3& u, const vec3& v, shared_ptr<Material> mat)
       : Quad(center, u, v, mat) {}
 
   void SetBoundingBox() override { bbox_ = AABB(origin_ - u_ - v_, origin_ + u_ + v_); }
@@ -137,3 +138,26 @@ public:
 private:
   double inner_;
 };
+
+// ----------------------------------------------------------------------------: box
+// Return the 3D box (six side) that contains the tow opposite vertices a & b
+inline shared_ptr<HittableList> box(const point3& a, const point3& b, shared_ptr<Material> mat) {
+  auto sides = make_shared<HittableList>();
+
+  // Construct the two opposite vertices with the minimum and maximum coordinates
+  auto min = point3(std::fmin(a.x(), b.x()), std::fmin(a.y(), b.y()), std::fmin(a.z(), b.z()));
+  auto max = point3(std::fmax(a.x(), b.x()), std::fmax(a.y(), b.y()), std::fmax(a.z(), b.z()));
+
+  auto dx = vec3(max.x() - min.x(), 0, 0);
+  auto dy = vec3(0, max.y() - min.y(), 0);
+  auto dz = vec3(0, 0, max.z() - min.z());
+
+  sides->Add(make_shared<Quad>(point3(min.x(), min.y(), max.z()), dx, dy, mat));   // front
+  sides->Add(make_shared<Quad>(point3(max.x(), min.y(), max.z()), -dz, dy, mat));  // right
+  sides->Add(make_shared<Quad>(point3(max.x(), min.y(), min.z()), -dx, dy, mat));  // back
+  sides->Add(make_shared<Quad>(point3(min.x(), min.y(), min.z()), dz, dy, mat));   // left
+  sides->Add(make_shared<Quad>(point3(min.x(), max.y(), max.z()), dx, -dz, mat));  // top
+  sides->Add(make_shared<Quad>(point3(min.x(), min.y(), min.z()), dx, dz, mat));   // bottom
+
+  return sides;
+}
