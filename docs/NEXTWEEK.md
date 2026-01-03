@@ -21,3 +21,5 @@
 ![Trilinear interpolation smoothed](../imgs/next/trilinearaly-interpolated-smoothed.jpg)
 
 ![perlin texture higher frequency](../imgs/next/perlin-texture-higher-frequency.jpg)
+
+![perlin texture shifted off integer values](../imgs/next/perlin-texture-shifted-off-integer-values.jpg)

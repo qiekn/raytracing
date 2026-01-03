@@ -9,7 +9,7 @@ public:
   Perlin() {
     // Generate 256 random floating-point values in [0,1)
     for (int i = 0; i < point_count_; i++) {
-      randfloat_[i] = RandomDouble();
+      randvec[i] = unit_vector(vec3::random(-1, 1));
     }
 
     // Generate permutation tables for x, y, and z directions
@@ -24,28 +24,23 @@ public:
     auto v = p.y() - std::floor(p.y());
     auto w = p.z() - std::floor(p.z());
 
-    // Hermitain smoothing
-    u = u * u * (3 - 2 * u);
-    v = v * v * (3 - 2 * v);
-    w = w * w * (3 - 2 * w);
-
     auto i = int(std::floor(p.x()));
     auto j = int(std::floor(p.y()));
     auto k = int(std::floor(p.z()));
-    double c[2][2][2];
+    vec3 c[2][2][2];
 
     for (int di = 0; di < 2; di++)
       for (int dj = 0; dj < 2; dj++)
         for (int dk = 0; dk < 2; dk++)
           // clang-format off
-          c[di][dj][dk] = randfloat_[
+          c[di][dj][dk] = randvec[
             perm_x_[(i + di) & 255] ^
             perm_y_[(j + dj) & 255] ^
             perm_z_[(k + dk) & 255]
           ];
     // clang-format on
 
-    return TrilinearInterp(c, u, v, w);
+    return PerlinInterp(c, u, v, w);
   }
 
 private:
@@ -69,24 +64,30 @@ private:
     }
   }
 
-  static double TrilinearInterp(double c[2][2][2], double u, double v, double w) {
+  static double PerlinInterp(const vec3 c[2][2][2], double u, double v, double w) {
+    auto uu = u * u * (3 - 2 * u);
+    auto vv = v * v * (3 - 2 * v);
+    auto ww = w * w * (3 - 2 * w);
     auto accum = 0.0;
+
     for (int i = 0; i < 2; i++)
       for (int j = 0; j < 2; j++)
-        for (int k = 0; k < 2; k++)
+        for (int k = 0; k < 2; k++) {
+          vec3 weight_v(u - i, v - j, w - k);
           // clang-format off
-          accum += (i * u + (1 - i) * (1 - u)) *
-                   (j * v + (1 - j) * (1 - v)) *
-                   (k * w + (1 - k) * (1 - w)) *
-                   c[i][j][k];
-    // clang-format on
+          accum += (i * uu + (1 - i) * (1 - uu)) *
+                   (j * vv + (1 - j) * (1 - vv)) *
+                   (k * ww + (1 - k) * (1 - ww)) *
+                   dot(c[i][j][k], weight_v);
+          // clang-format on
+        }
 
     return accum;
   }
 
 private:
   static const int point_count_ = 256;
-  double randfloat_[point_count_];
+  vec3 randvec[point_count_];
 
   // perm -> permutation (置换表 / 随机排列表)
   int perm_x_[point_count_];

@@ -80,7 +80,7 @@ public:
   NoiseTexture(double scale) : scale_(scale) {}
 
   color Value(double u, double v, const point3& p) const override {
-    return color(1,1,1) * perlin_.Noise(scale_ * p);
+    return color(1,1,1) * 0.5 * (1.0 + perlin_.Noise(scale_ * p));
   }
   
 private:
