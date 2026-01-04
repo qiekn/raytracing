@@ -47,3 +47,5 @@
 ![cornell box with two blocks](../imgs/next/cornell-box-with-two-blocks.jpg)
 
 ![cornell box with Y-rotated](../imgs/next/cornell-box-with-rotate-y.jpg)
+
+![cornell box with two blocks of smoke](../imgs/next/cornell-box-with-smoke-blocks.jpg)

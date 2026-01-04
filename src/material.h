@@ -105,10 +105,28 @@ private:
 class DiffuseLight : public Material {
 public:
   DiffuseLight(shared_ptr<Texture> texture) : texture_(texture) {}
+
   DiffuseLight(const color& emit) : texture_(make_shared<SolidColor>(emit)) {}
 
   color Emitted(double u, double v, const point3& p) const override {
     return texture_->Value(u, v, p);
+  }
+
+private:
+  shared_ptr<Texture> texture_;
+};
+
+class Isotropic : public Material {
+public:
+  Isotropic(const color& albedo) : texture_(make_shared<SolidColor>(albedo)) {}
+
+  Isotropic(shared_ptr<Texture> texture) : texture_(texture) {}
+
+  bool Scatter(const Ray& r_in, const HitRecord& rec, color& attenuation,
+               Ray& scattered) const override {
+    scattered = Ray(rec.p, random_unit_vector(), r_in.time());
+    attenuation = texture_->Value(rec.u, rec.v, rec.p);
+    return true;
   }
 
 private:
